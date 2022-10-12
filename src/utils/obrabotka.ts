@@ -1,3 +1,4 @@
+import { count } from "console";
 import { IGaussPoint, IPoint, IResult } from "./models";
 
 const getResult = (arr: number[], kStudent: number): IResult => {
@@ -6,6 +7,7 @@ const getResult = (arr: number[], kStudent: number): IResult => {
     dispersion: getDispersion(arr),
     count: arr.length,
     averDev: getAverDev(arr),
+    averMathAverDev: getAverDev(arr) / arr.length ** 0.5,
     data: arr,
     dovInter: getDovInter(arr, kStudent),
     resData: getResData(arr),
@@ -16,13 +18,13 @@ const getResult = (arr: number[], kStudent: number): IResult => {
 };
 
 const getDovInter = (arr: number[], kStudent: number): number => {
-  return kStudent * getAverDev(arr);
+  return (kStudent * getAverDev(arr)) / arr.length ** 0.5;
 };
 
 const getAverDev = (arr: number[]): number => {
   let s = 0;
   getResData(arr).forEach((item) => (s += item.sqrtDev));
-  return s / (arr.length * (arr.length - 1));
+  return s / (arr.length - 1);
 };
 
 const getOtnErr = (arr: number[], kStudent: number): number => {
@@ -91,10 +93,13 @@ const getAverageDeviation = (arr: number[]): number => {
   return sum / arr.length;
 };
 
-function getAverageNum(arr: number[]): number {
-  let sum = arr.reduce((prev, curr) => (prev += curr));
+const getAverageNum = (arr: number[]): number => {
+  let sum = 0;
+  for (let i = 0; i < arr.length; i++) {
+    sum += arr[i];
+  }
   return sum / arr.length;
-}
+};
 
 function getRandomInt(min: number, max: number): number {
   return min + Math.floor(Math.random() * (max - min + 1));

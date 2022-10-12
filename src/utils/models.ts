@@ -20,6 +20,7 @@ export interface IPoint {
 export interface IResult {
   Xaver: number;
   kStudent: number;
+  averMathAverDev: number;
   averDev: number;
   dovInter: number;
   dispersion: number;
